@@ -1,5 +1,6 @@
 #pragma once
 
+// OpenCV
 #include <opencv2/opencv.hpp>
 #include "opencv2/objdetect.hpp"
 #include "opencv2/highgui.hpp"
@@ -7,6 +8,10 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/core/core.hpp"
+
+// Cpp Libs
+#include <thread>
+#include <future>
 #include <stdio.h>
 #include <iostream>
 
@@ -31,11 +36,15 @@ namespace wml {
       cv::Mat SetupVision(int CamPort, int FPS, int ResHeight, int ResWidth, int Exposure, std::string CamName, bool RetroTrack);
 
 
+
       /**
        * Track using retro reflective tape, Using low exposure and Green pixle filtering
        * Using the defaults for the colour spectrum and exposure settings.
        */
       cv::Mat RetroTrack(cv::Mat Img, int ErosionSize, int DialationSize);
+
+
+
 
       /**
        * Track using your own adjusted settings for the colour spectrum and exposure
@@ -46,5 +55,9 @@ namespace wml {
       VisionCamera Camera;
       VisionOutput Output;
       VisionProcessing Processing;
+
+      bool TrackingViewable = false;
+    private:
+      bool RetroThreadStarted = true;
   };
 }
